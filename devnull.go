@@ -15,3 +15,5 @@ var Reader *reader
 func init() {
   Reader = new(reader)
 }
+
+func Read(b []byte) { Reader.Read(b) }
