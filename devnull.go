@@ -1,5 +1,10 @@
 package devnull
 
+import (
+	"io"
+	"io/ioutil"
+)
+
 type reader struct{}
 
 func (reader) Read(b []byte) (int, error) {
@@ -9,19 +14,13 @@ func (reader) Read(b []byte) (int, error) {
 	return len(b), nil
 }
 
-var Reader *reader
+var Reader io.Reader
 
 func Read(b []byte) (n int, err error) {
 	return Reader.Read(b)
 }
 
-var Writer *writer
-
-type writer struct{}
-
-func (writer) Write(p []byte) (n int, err error) {
-	return len(p), nil
-}
+var Writer io.Writer
 
 func Write(p []byte) (n int, err error) {
 	return Writer.Write(p)
@@ -29,5 +28,5 @@ func Write(p []byte) (n int, err error) {
 
 func init() {
 	Reader = new(reader)
-	Writer = new(writer)
+	Writer = ioutil.Discard
 }
